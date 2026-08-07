@@ -7,9 +7,6 @@ build/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### Maven ###
-.mvn/
-mvnw
-mvnw.cmd
 
 ### Gradle (caso use no futuro) ###
 .gradle/
