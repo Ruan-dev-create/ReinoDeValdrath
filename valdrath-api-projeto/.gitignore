@@ -1,0 +1,55 @@
+### Compilados / Build ###
+target/
+build/
+*.class
+*.jar
+*.war
+!.mvn/wrapper/maven-wrapper.jar
+
+### Maven ###
+.mvn/
+mvnw
+mvnw.cmd
+
+### Gradle (caso use no futuro) ###
+.gradle/
+gradlew
+gradlew.bat
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+out/
+
+### VS Code ###
+.vscode/
+
+### Eclipse (caso alguém do time use) ###
+.classpath
+.project
+.settings/
+bin/
+
+### Logs ###
+*.log
+logs/
+
+### Sistema Operacional ###
+.DS_Store
+Thumbs.db
+desktop.ini
+
+### Variáveis de ambiente / Configs sensíveis ###
+.env
+application-local.properties
+application-local.yml
+*.env
+
+### Banco de dados local (se usar H2/SQLite em arquivo) ###
+*.db
+*.sqlite
+
+### Outros ###
+*.tmp
+*.bak
