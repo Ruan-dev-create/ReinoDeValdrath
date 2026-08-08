@@ -31,7 +31,7 @@ public class CadastroPlayerService {
     @Autowired
     private CutsceneView cutscineInicial;
 
-    public void verificaCadastroLogin(){
+    public Personagem verificaCadastroLogin() {
         System.out.print("""
                 \n
                 =====================================================================
@@ -42,30 +42,37 @@ public class CadastroPlayerService {
 
         String opcao = l.nextLine().trim().toLowerCase();
 
-        while(!opcao.equals("sim") && !opcao.equals("nao") && !opcao.equals("não")){
+        while (!opcao.contains("sim") && !opcao.contains("nao") && !opcao.contains("não")) {
             System.out.print("Digite a opção corretamente: ");
             opcao = l.nextLine().trim().toLowerCase();
         }
 
-        try{
+        try {
 
             Player playerLogado;
 
-            if(opcao.equals("sim")){
+            if (opcao.equals("sim")) {
                 playerLogado = LogarPlayer();
-            }else{
+            } else {
                 playerLogado = CadastroPlayer();
             }
 
-            if(playerLogado != null){
+            if (playerLogado != null) {
+
                 verificarCutscene(playerLogado);
+
+                return personagemRepository.findByPlayer(playerLogado);
             }
 
-        }catch(ValdrathException e){
+            return null;
+
+        } catch (ValdrathException e) {
             e.getMessage();
+            return null;
         }
 
     }
+
 
     public void verificarCutscene(Player player){
         Personagem personagem = personagemRepository.findByPlayer(player);
