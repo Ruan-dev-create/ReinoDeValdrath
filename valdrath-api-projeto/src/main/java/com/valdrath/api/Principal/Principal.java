@@ -1,18 +1,23 @@
 package com.valdrath.api.Principal;
 
 import com.valdrath.api.Combate.Combate;
-import com.valdrath.api.Exception.ValdrathException;
+import com.valdrath.api.Model.Personagem;
 import com.valdrath.api.Repository.PlayerRepository;
 import com.valdrath.api.Service.CadastroPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.valdrath.api.Service.CombateService;
 
 import java.util.Scanner;
 
 @Component
 public class Principal {
 
+    @Autowired
     private Combate combate;
+
+    @Autowired
+    private CombateService combateService;
 
     private static Scanner l = new Scanner(System.in);
 
@@ -21,11 +26,17 @@ public class Principal {
 
     private PlayerRepository playerRepository;
 
+    private Personagem personagem;
+
     public void rodandoJogo() {
         telaInicial();
         telaPrincipal();
 
+        combateService.verificarLevelDeJogadorParaBatalha(personagem);
+
     }
+
+
 
     public static void delay(int tempo) {
 
@@ -63,7 +74,7 @@ public class Principal {
         boolean valido = false;
 
         mostrarLogo();
-        delay(500);
+        delay(2000);
 
         while(!valido){
             System.out.print("""
@@ -81,10 +92,8 @@ public class Principal {
 
                 if(opPrincipal == 1 || opPrincipal == 2 || opPrincipal == 3){
                     valido = true;
-
                     if(opPrincipal == 1){
-
-                        cadastro.verificaCadastroLogin();
+                            personagem = cadastro.verificaCadastroLogin();
 
                     } else if (opPrincipal == 2) {
 
@@ -95,9 +104,7 @@ public class Principal {
                     }else if (opPrincipal == 3) {
 
                         System.exit(0);
-
                     }
-
                 }else{
                     System.out.println("Digite uma opção valida, porfavor: ");
                 }
@@ -117,7 +124,7 @@ public class Principal {
         }
     }
 
-    public static void esperaENTER(Scanner l){
+    public static void esperaENTER(Scanner l) {
         System.out.println("\nAperte ENTER para continuar.");
         l.nextLine();
     }

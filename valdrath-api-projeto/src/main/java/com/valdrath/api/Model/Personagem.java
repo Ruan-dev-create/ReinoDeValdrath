@@ -8,7 +8,7 @@ public class Personagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "player_id")
@@ -18,15 +18,14 @@ public class Personagem {
     private Classe classe;
     private double vida;
     private double dano;
-    private int level;
+    private int level = 1;
 
     private boolean viuAberturaCutsene;
-
     public Personagem() {
 
     }
 
-    Personagem(int id, Player player, Classe classe, double vida, double dano, int level) {
+    Personagem(Long id, Player player, Classe classe, double vida, double dano, int level) {
         this.id = id;
         this.player = player;
         this.classe = classe;
@@ -43,11 +42,11 @@ public class Personagem {
         System.out.println("Level: " + level);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
