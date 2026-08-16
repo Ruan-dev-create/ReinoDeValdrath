@@ -39,9 +39,7 @@ public class Player {
         this.senha_conta = senha_conta;
     }
 
-    public String verificarEmail(String email) {
-        Scanner l = new Scanner(System.in);
-
+    public String verificarEmail(String email, Scanner l) {
         Pattern pattern = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
         while (!pattern.matcher(email).matches()) {

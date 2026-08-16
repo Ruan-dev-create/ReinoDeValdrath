@@ -1,6 +1,7 @@
 package com.valdrath.api.Service;
 
 import com.valdrath.api.Exception.ValdrathException;
+import com.valdrath.api.Model.Classe;
 import com.valdrath.api.Model.Personagem;
 import com.valdrath.api.Model.Player;
 import com.valdrath.api.Repository.PersonagemRepository;
@@ -34,25 +35,35 @@ public class CadastroPersonagemService {
 
             delay(500);
 
-            System.out.println("""
-                    - O que deseja ser? 
-                    
-                    [ 1 ] Guerreiro
-                    [ 2 ] Mago
-                    [ 3 ] Arqueiro
-                    [ 4 ] Assasino 
-                    [ 5 ] Necromante
-                    
-                    ====================
-                    >>>>""");
+            Classe classeEscolhida = null;
+            while (classeEscolhida == null) {
+                System.out.println("""
+                        - O que deseja ser? 
+                        
+                        [ 1 ] Guerreiro
+                        [ 2 ] Mago
+                        [ 3 ] Arqueiro
+                        [ 4 ] Assasino 
+                        [ 5 ] Necromante
+                        
+                        ====================
+                        >>>>""");
 
-            String op = l.nextLine();
-            personagem.setClasse(escolherClasse(op));
+                String op = l.nextLine();
+                classeEscolhida = escolherClasse(op);
+
+                if (classeEscolhida == null) {
+                    System.out.println("Opção inválida, escolha um número de 1 a 5.");
+                }
+            }
+
+            personagem.setClasse(classeEscolhida);
             personagem.mostrarInfo();
+            delay(6000);
 
             personagemRepository.save(personagem);
-        }catch (ValdrathException e) {
-            e.getMessage();
+        } catch (ValdrathException e) {
+            System.out.println("Erro no cadastro do personagem: " + e.getMessage());
         }
     }
 }

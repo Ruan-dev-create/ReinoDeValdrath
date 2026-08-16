@@ -18,6 +18,8 @@ public class Personagem {
     private Classe classe;
     private double vida;
     private double dano;
+    private int pocoes = 3;
+    private double moedas;
     private int level = 1;
 
     private boolean viuAberturaCutsene;
@@ -25,21 +27,14 @@ public class Personagem {
 
     }
 
-    Personagem(Long id, Player player, Classe classe, double vida, double dano, int level) {
-        this.id = id;
-        this.player = player;
-        this.classe = classe;
-        this.vida = vida;
-        this.dano = dano;
-        this.level = level;
-    }
-
     public void mostrarInfo(){
         System.out.println("Nome: " + player.getNome());
         System.out.println("Classe: " + classe);
-        System.out.println("Vida: " + vida);
-        System.out.println("Dano: " + dano);
+        System.out.println("Vida: " + vida + "❤️");
+        System.out.println("Dano: " + dano + "⚔️");
         System.out.println("Level: " + level);
+        System.out.println("Dinheiro: " + moedas + "🪙");
+        System.out.println("Poções: " + pocoes + "🧪");
     }
 
     public Long getId() {
@@ -98,5 +93,21 @@ public class Personagem {
 
     public void setViuAberturaCutsene(boolean viuAberturaCutsene) {
         this.viuAberturaCutsene = viuAberturaCutsene;
+    }
+
+    public double getMoedas() {
+        return moedas;
+    }
+
+    public void setMoedas(double moedas) {
+        this.moedas = moedas;
+    }
+
+    public int getPocoes() {
+        return pocoes;
+    }
+
+    public void setPocoes(int pocoes) {
+        this.pocoes = pocoes;
     }
 }

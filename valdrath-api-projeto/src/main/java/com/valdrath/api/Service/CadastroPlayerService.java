@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static com.valdrath.api.Principal.Principal.delay;
 import static com.valdrath.api.Principal.Principal.pulaLinhas;
 
 @Service
@@ -67,17 +68,17 @@ public class CadastroPlayerService {
             return null;
 
         } catch (ValdrathException e) {
-            e.getMessage();
+            System.out.println("Erro no login/cadastro: " + e.getMessage());
             return null;
         }
 
     }
 
 
-    public void verificarCutscene(Player player){
+    public void verificarCutscene(Player player) {
         Personagem personagem = personagemRepository.findByPlayer(player);
 
-        if(personagem != null && !personagem.isViuAberturaCutsene()){
+        if (personagem != null && !personagem.isViuAberturaCutsene()) {
             cutscineInicial.iniciarCutsceneAbertura(l);
 
             personagem.setViuAberturaCutsene(true);
@@ -85,9 +86,9 @@ public class CadastroPlayerService {
         }
     }
 
-    public Player CadastroPlayer(){
+    public Player CadastroPlayer() {
 
-        pulaLinhas(37);
+        pulaLinhas(50);
         try {
             Player playerLogado = new Player();
 
@@ -97,33 +98,64 @@ public class CadastroPlayerService {
             String nome = l.nextLine().trim();
             playerLogado.setNome(nome);
 
-            System.out.print("Digite sua idade: ");
-            int idade = Integer.parseInt(l.nextLine().trim());
+            int idade = lerIdadeValida();
             playerLogado.setIdade(idade);
 
             System.out.print("Digite o email da sua conta: ");
             String email = l.nextLine().trim();
 
-            email = playerLogado.verificarEmail(email);
+
+            email = playerLogado.verificarEmail(email, l);
             playerLogado.setEmail(email);
 
             System.out.print("Digite a senha: ");
             String senha = l.nextLine().trim();
             playerLogado.setSenha_conta(senha);
 
+            System.out.printf("""
+                    || << Dados do Jogador >> ||
+                    |Nome: %s
+                    |Idade: %d
+                    |Email: %s
+                    |Senha: *
+                    """, playerLogado.getNome(), playerLogado.getIdade(), playerLogado.getEmail());
+
+            delay(4000);
             playerRepository.save(playerLogado);
 
             cadastroPersonagem.cadastroPersonagem(playerLogado);
 
             return playerLogado;
 
-        }catch (ValdrathException e) {
-            e.getMessage();
+        } catch (ValdrathException e) {
+            System.out.println("Erro no cadastro do jogador: " + e.getMessage());
             return null;
         }
     }
 
-    public Player LogarPlayer(){
+    private int lerIdadeValida() {
+        while (true) {
+
+            System.out.print("Digite sua idade: ");
+
+            try {
+
+                int idade = Integer.parseInt(l.nextLine().trim());
+
+                if (idade <= 0) {
+                    System.out.println("Idade deve ser maior que zero.");
+                    continue;
+                }
+
+                return idade;
+            } catch (NumberFormatException e) {
+                System.out.println("Isso não é um número válido, tente novamente.");
+
+            }
+        }
+    }
+
+    public Player LogarPlayer() {
 
         pulaLinhas(37);
         try {
@@ -148,10 +180,22 @@ public class CadastroPlayerService {
             }
 
             System.out.println("Login realizado com sucesso!");
+
+            System.out.printf("""
+                    || << Dados do Jogador >> ||
+                    |Nome: %s
+                    |Idade: %d
+                    |Email: %s
+                    |Senha: *
+                    
+                    """, player.get().getNome(), player.get().getIdade(), player.get().getEmail());
+
             return player.get();
 
-        }catch (ValdrathException e){
-            e.getMessage();
+
+
+        } catch (ValdrathException e) {
+            System.out.println("Erro ao fazer login: " + e.getMessage());
             return null;
         }
     }
